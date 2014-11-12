@@ -1,11 +1,17 @@
 {
 	"name":"LanguageDemo",
+	"author":"Daniel Ortiz",
 	"version":"0.0.1",
 	"scripts":{
 		"start":"node server.js",
 		"postinstall":"bower install"
 	},
+	"repository":{
+		"type":"git",
+		"url":"https://github.com/danielor/Language-Demo.git"
+	},
 	"dependencies":{
+		"assetmanager":"1.1.1",
 		"async":"0.9.0",
 		"bower":"1.3.12",
 		"body-parser":"1.9.2",
@@ -14,10 +20,38 @@
 		"express-validator":"2.6.0",
 		"errorhandler":"1.2.2",
 		"jade":"1.7.0",
+		"grunt-cli":"0.1.13",
+		"grunt-concurrent":"1.0.0",
+		"grunt-contrib-clean":"0.4.0",
+		"grunt-contrib-csslint":"0.3.1",
+		"grunt-contrib-cssmin":"0.10.0",
+		"grunt-contrib-jshint":"0.10.0",
+		"grunt-contrib-uglify":"0.6.0",
+		"grunt-contrib-watch":"0.6.1",
+		"grunt-env":"0.4.2",
+		"grunt-nodemon":"0.3.0",
+		"load-grunt-tasks":""
 		"Language":"git+https://github.com/danielor/Language.git",
 		"less":"2.0.0",
 		"lusca":"1.0.2",
 		"morgan":"1.5.0",
 		"underscore":"1.7.0"
+	},
+	"devDependencies":{
+		"grunt-karma":"0.9.0",
+		"grunt-mocha-test":"0.12.2",
+		"karma":"0.12.24",
+		"karma-chrome-launcher":"0.1.15",
+		"karma-coverage":"0.2.6",
+		"karma-firefox-launcher":"0.1.13",
+		"karma-html2js-preprocessor":"0.1.0",
+		"karma-ng-html2js-preprocessor":"0.1.2",
+		"karma-ng-scenario":"0.1.0",
+		"karma-phantomjs-launcher":"0.1.14",
+		"karma-require-js":"0.2.2",
+		"ms":"0.6.2",
+		"require.js":"2.1.15",
+		"should":"4.0.4",
+		"supertest":"0.15.0"
 	}
 }
