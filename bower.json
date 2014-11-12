@@ -1,8 +1,8 @@
 {
 	"name": "LanguageDemo",
-	"description": "A demo of Language"
+	"description": "A demo of Language",
 	"dependencies":{
-		"boostrap":"~3.3.0",
+		"bootstrap":"~3.3.0",
 		"jquery":"~2.0.3",
 		"ratchet":"2.0.2",
 		"underscore":"1.7.0"
