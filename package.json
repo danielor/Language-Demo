@@ -29,8 +29,10 @@
 		"grunt-contrib-uglify":"0.6.0",
 		"grunt-contrib-watch":"0.6.1",
 		"grunt-env":"0.4.2",
+		"grunt-mocha":"0.1.9",
 		"grunt-nodemon":"0.3.0",
-		"load-grunt-tasks":""
+		"load-grunt-tasks":"1.0.0",
+		"lodash":"2.4.1",
 		"Language":"git+https://github.com/danielor/Language.git",
 		"less":"2.0.0",
 		"lusca":"1.0.2",
