@@ -8,9 +8,13 @@ var expressValidator = require('express-validator');
 var lusca = require('lusca');
 var morgan = require('morgan');
 var path = require('path');
+var redis = require('redis');
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+
 
 // The app imports
-
+var viewManager = require('./views/ViewManager').ViewManager;
 /**
  * A simple configuration manager that provides a simple interface
  * for dev, staging, and production run configurations
@@ -26,11 +30,22 @@ var Configuration = (function(){
 		return 8000;
 	}
 	
+	/**
+	 * A function that returns the environment's
+	 * redis secret
+	 * @function getRediSecret
+	 * @memberof Configuration
+	 */
+	function getRedisSecret(){
+		return process.env.REDIS || 'redisDevSecret';
+	}
+	
 	/*
 	 * The Configuration interface
 	 */
 	return {
-		getServerPort:getServerPort
+		getServerPort:getServerPort,
+		getRedisSecret:getRedisSecret
 	}
 });
 
@@ -57,6 +72,7 @@ var AppManager = (function(){
 	 */
 	var configuration = new Configuration();
 	
+	
 	/**
 	 * An object that encapsulates all of the manager objects
 	 * @name managerBlock
@@ -64,8 +80,19 @@ var AppManager = (function(){
 	 * @memberof AppManager
 	 */
 	var managerBlock = {
-		"configuration": configuration
+		"configuration": configuration,
 	};
+	
+	/**
+	 * A sipublic interface of the app manager
+	 * @name appManagerInterface 
+	 * @memberof AppManager
+	 */
+	var appManagerInterface = {
+		start:start,
+		getManagerBlock:getManagerBlock
+	};
+
 	
 	/**
 	 * Setup the express.js app. This function will add the
@@ -76,23 +103,41 @@ var AppManager = (function(){
 	 */
 	function _setupExpress(){
 		
-		// The basic setup
+		// The basic of the express app
 		app = express();
-		app.set('views', path.join(__dirname, 'public/view'));
+		app.set('views', path.join(__dirname, '../public/view'));
 		app.set('view engine','jade');
 		app.use(morgan('combined'));
-		app.use('/bower_components', express.static(__dirname + "/bower_components"));
-		app.use('/public', express.static(__dirname + "/public"));
+		app.use('/bower_components', express.static(__dirname + "../bower_components"));
+		app.use('/public', express.static(__dirname + "../public"));
 		app.use(expressValidator());
 		app.use(cookieParser());
 		app.use(bodyParser.urlencoded({extended:true}));
+		_setupRedis();
 		app.use(lusca({
 			csrf:true,
 			xframe: 'SAMEORIGIN',
             hsts:{maxAge:31536000, includeSubDomains:true},
             xssProtection:true
 		}));
-		
+		managerBlock.express = app;
+	}
+	
+	/**
+	 * Setup the redis cache. This function will create the redis
+	 * cache and tie it to the express.js session
+	 * @function _setupRedis
+	 * @memberof AppManager
+	 */
+	function _setupRedis(){
+		var redisClient = redis.createClient();
+		app.use(session({ 
+			store: new RedisStore({ttl:3600}), 
+			secret: configuration.getRedisSecret(),
+			saveUninitialized: false, 
+			resave: false
+		}));
+		managerBlock.redis = redisClient;
 	}
 	
 	/**
@@ -104,18 +149,33 @@ var AppManager = (function(){
 	 */
 	function start(){
 		_setupExpress();
+		_setupRedis();
+		
+		// Initialize and save the main manager objects
+		var ViewManager = new viewManager(appManagerInterface);
+		managerBlock.views = ViewManager;
+		
+		// Setup the managers
+		ViewManager.setupViews();
 		
 		// The config setup
 		var port = configuration.getServerPort();
 		app.listen(port);
 	}
 	
+	/**
+	 * Get the manager block. Return an object that encapsulates 
+	 * all of the state managers of the app
+	 * @name AppManager
+	 */
+	function getManagerBlock(){
+		return managerBlock;
+	}
+	
 	/*
 	 * The public interface of the AppManager closure
 	 */
-	return {
-		start:start
-	}
+	return appManagerInterface;
 });
 
 // Export the app manager
