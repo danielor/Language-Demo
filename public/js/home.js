@@ -14,7 +14,7 @@ var HomeClientManager = (function(){
 	 */
 	var lengthState = {
 		"isSent":false,
-		"isUpdated":false,
+		"isError":false,
 	}
 	
 	/**
@@ -66,7 +66,46 @@ var HomeClientManager = (function(){
     	var lengthText = $(".lengthArea").val();
 		if(!lengthState.isSent){
 			lengthState.isSent = true;
+			sendPayload("length",{"string": lengthText}, function(data){
+				lengthState.isSent = false;
+				lengthState.isError = false;
+				$(".lengthAreaResult").text(data.result);
+			}, function(data){
+				lengthState.isSent = false;
+				lengthState.isError = true;
+				$(".lengthAreaResult").text("Unknown error");
+			});
 		}
+    }
+    
+    /**
+     * An internal function used to get the base url of the
+     * current server
+     * @function _getBaseURL
+     * @memberof HomeManager
+     */
+    function _getBaseURL(){
+    	return window.location.protocol+'//'+window.location.host+'/';
+    }
+    
+    /**
+     * A function that will post information to a particular endpoint with
+     * a payload
+     * @function sendPayload
+     * @param endPoint The end point to send home
+     * @param payload The payload to send to the data
+     * @param successCallback A callback for a successful call
+     * @param errorCallback A callback for an error call
+     * @memberof HomeManager
+     */
+    function sendPayload(endPoint, payload, successCallback, errorCallback){
+    	var effectiveURL = _getBaseURL() + endPoint;
+    	$.ajax({
+    		type:"POST",
+    		url:effectiveURL,
+    		data:payload
+    	}).done(successCallback).fail(errorCallback)
+    	
     }
     
 	/**
