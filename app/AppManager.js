@@ -108,8 +108,9 @@ var AppManager = (function(){
 		app.set('views', path.join(__dirname, '../public/view'));
 		app.set('view engine','jade');
 		app.use(morgan('combined'));
-		app.use('/bower_components', express.static(__dirname + "../bower_components"));
-		app.use('/public', express.static(__dirname + "../public"));
+		app.use('/bower_components', express.static(__dirname + "/../bower_components"));
+		app.use('/public', express.static(__dirname + "/../public"));
+		console.log(__dirname + "../public");
 		app.use(expressValidator());
 		app.use(cookieParser());
 		app.use(bodyParser.urlencoded({extended:true}));

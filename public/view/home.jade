@@ -9,12 +9,20 @@ html(lang="en")
 		
 		//- The script information associated 
 		script(src="#{bowerAssets}/jquery/jquery.min.js")
+		script(src="#{appAssets}/js/home.js")
+		link(rel="stylesheet" href="#{appAssets}/css/home.css")
+		link(href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400' rel='stylesheet' type='text/css')
 	body
 		#header
 			.headerContent
 				span Language
+		input(type='hidden',name='_csrf',value=_csrf)
 		.content
 			h1 String Utils
+			
+			h3 Length
+			p(class='lengthAreaResult languageResult')
+			textarea(class='lengthArea')
 				
 		#footer
 			.link
