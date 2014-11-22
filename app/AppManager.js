@@ -27,7 +27,8 @@ var Configuration = (function(){
 	 * @memberof Configuration#
 	 */
 	function getServerPort(){
-		return 8000;
+		var port = Number(process.env.PORT || 8000);
+		return port;
 	}
 	
 	/**
