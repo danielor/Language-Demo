@@ -25,7 +25,7 @@ var HomeClientManager = (function(){
 	function init(){
 		setupNetworking();
 		$(".lengthArea").on('change', onLengthChange);
-		$(".lengthArea").on('keypress', function(event){
+		$(".lengthArea").on('keyup', function(event){
 			_onLengthChange();
 		});
 	}
@@ -69,7 +69,7 @@ var HomeClientManager = (function(){
 			sendPayload("length",{"string": lengthText}, function(data){
 				lengthState.isSent = false;
 				lengthState.isError = false;
-				$(".lengthAreaResult").text(data.result);
+				$(".lengthAreaResult").text("Length Result: " + data.result);
 			}, function(data){
 				lengthState.isSent = false;
 				lengthState.isError = true;

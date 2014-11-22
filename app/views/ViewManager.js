@@ -15,11 +15,11 @@ var ViewManager = (function(a){
 	
 	/**
 	 * An instance of a lanaguage object
-	 * @name language
-	 * @type {Language}
+	 * @name stringUtils
+	 * @type {StringUtils}
 	 * @memberof ViewManager
 	 */
-	var language = new Language();
+	var stringUtils = new StringUtils();
 	
 	/**
 	 * Setup the views in this web app
