@@ -1,0 +1,77 @@
+/**
+The styling for the header of the language demo
+*/
+body,html{
+	display:block;
+	height:100%;
+	width:100%;
+}
+
+body #header{
+	height:64px;
+	top:0;
+	left:0;
+}
+
+body #header .headerContent{
+	width:80%;
+	margin:0 auto;
+}
+
+body #header .headerContent span{
+	font-family: 'Open Sans', sans-serif;
+	font-size:36px;
+	font-weight:bold;
+	line-height:64px;
+}
+
+/**
+Style the main content of the language
+*/
+body .content{
+	margin:0 auto;
+	width:80%;
+}
+
+body .content h1{
+	font-family:'Open Sans', sans-serif;
+	font-size:30px;
+}
+
+body .content h3{
+	font-family:'Open Sans', sans-serif;
+	font-size:20px;
+}
+
+body .content .languageResult{
+	font-family:'Open Sans', sans-serif;
+	font-size:13px;
+	color:#097054;
+}
+
+body .content textarea{
+	font-family:'Open Sans', sans-serif;
+	font-size:12px;
+	resize:none;
+	height:200px;
+	width:300px;
+}
+
+/**
+Styling for the footer of the language demo
+*/
+body #footer{
+	height:64px;
+	bottom:0;
+	left:0;
+}
+
+body #footer .link{
+	margin:0 auto;
+	width:80%;
+}
+
+body #footer .link *{
+	float:right;
+	padding-right:10px;
+}
